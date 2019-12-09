@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>栈的应用 ———— 10进制转2进制</title>
+    <script src="Stack.js"></script>
+</head>
+
+<body>
+    <script>
+        //10进制转2进制 -- 用10进制数n和2整除（直到结果为0）,将每次得到的余数压入栈中。这些余数再出栈就得到了2进制结果
+        function decToBin(decNumber) {
+            //创建一个栈的实例D
+            let stack = new Stack();
+
+            //需要10进制数除以2的 商 和 余数
+            while (decNumber > 0) {
+                //获取余数并放入栈中
+                stack.push(decNumber % 2);
+
+                //获取整除后的结果，作为下一次进行运算的数字
+                decNumber = Math.floor(decNumber / 2);
+            }
+
+            //出栈
+            let binString = '';
+            while (!stack.isEmpty()) {
+                binString += stack.pop();
+            }
+
+            return binString;
+        }
+
+        //测试10进制转2进制
+        console.log(decToBin(100));
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>击鼓传花</title>
+    <script src="Queue.js"></script>
+</head>
+
+<body>
+    <script>
+        //击鼓传花规则：所有人围成一圈，从某位同学手里开始向旁边的同学传花，鼓声停止时，花落在谁手里就出来表演节目
+        //修改规则：所有人围成一圈，开始数数，数到某个数字的人自动淘汰（淘汰后傍边下一个人又从头开始数），最后剩下的这个人获得胜利
+        //请问：最后剩下的是原来在哪一个位置的人？
+
+        //封装一个基于队列的函数：参数：所有参与人的姓名，会淘汰的数字； 结果：最终剩下的一人的姓名
+        //队列中的每个人，若不是数到要淘汰的数字，就排到队尾去，数到某个数的人淘汰，循环往复，直到队列的size为1
+
+        function passGame(outNum, ...nameList) {
+            //1.创建一个队列结构
+            let q = new Queue();
+
+            //2.将所有人依次加入到队列中
+            q.enqueue(...nameList);
+
+            //3.开始数数，不是outNum的话，重新添加到队列末尾(即：先删除再添加)。是outNum的话就从队列中删除。直到队列长度为1
+            while (q.size() > 1) {
+                //从0到outNum-1的这些人都不应该被淘汰
+                for (let i = 0; i < outNum - 1; i++) {
+                    //把删除的元素添加到队列尾部  -- 而不是添加nameList[i], 因为nameList[i]永远不会改变
+                    q.enqueue(q.dequeue());
+                }
+                //删除数到outNum的人
+                q.dequeue();
+            }
+
+            //4.最终队列中只剩下一个人，就是获得胜利的人
+            return '最终剩下的人：' + q.front() + '\n' + '最终剩下的人的下标：' + nameList.indexOf(q.front());
+        }
+
+        console.log(passGame(3, 'a', 'b', 'c', 'd', 'e', 'f', 'g'));
+    </script>
+</body>
+
+</html>
