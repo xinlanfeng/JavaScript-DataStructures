@@ -142,14 +142,14 @@ function LinkedList() {
 
     //7.remove(element):从链表中删除指定元素
     LinkedList.prototype.remove = function (data) {
-        //利用前面已经实现的方法实现remove
+        //利用前面已经实现的方法实现remove -- 通过找到元素的位置删除元素
         // //1.根据data获取元素在链表中的位置
         // let position = this.indexOf(data);
 
         // //2.根据元素的位置删除元素
         // return this.removeAt(position);
 
-        //不利用前面已经实现的方法
+        //不利用前面已经实现的方法 -- 通过找到元素本身删除元素
         let current = this.head; //当前节点
         let previous = null; //前一个节点
 
@@ -160,17 +160,19 @@ function LinkedList() {
                 } else {
                     previous.next = current.next;
                 }
-                break;
+
+                //链表长度-1
+                this.length--;
+
+                //返回被删除的数据
+                return current.data;
             }
             previous = current;
             current = current.next;
         }
 
-        //链表长度-1
-        this.length--;
-
-        //返回被删除的数据
-        return current.data;
+        //如果没有找到对应元素，返回错误信息
+        return `没有找到${data}元素`;
     }
 
     //8.isEmpty():如果链表中不包含任何元素，返回true，否则返回false
