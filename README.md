@@ -1,3 +1,3 @@
-# JavaScript版数据结构
+# JavaScript 版数据结构
 
-自己用javascript实现的数据结构
+用 javascript 实现的数据结构
